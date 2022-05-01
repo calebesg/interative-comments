@@ -39,16 +39,26 @@
           </li>
         </ul>
 
+        <!-- FORM COMMENTS -->
         <form action="#" class="c-comment__form">
           <picture>
             <img
+              class="c-comment__form__avatar"
               src="./images/avatars/image-juliusomo.webp"
               loading="lazy"
               alt="Juliusomo"
             />
           </picture>
 
-          <textarea name="comment" id="comment" cols="30" rows="10"></textarea>
+          <textarea
+            class="c-comment__form__text"
+            name="comment"
+            id="comment"
+            cols="30"
+            rows="1"
+            placeholder="Add a comment..."
+            aria-label="Enter you comment"
+          ></textarea>
 
           <button class="btn btn--blue">SEND</button>
         </form>

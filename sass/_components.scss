@@ -1,0 +1,21 @@
+@import 'variables';
+
+$button: '.btn';
+
+#{$button} {
+  border: none;
+  height: 3rem;
+  width: 6.5rem;
+  color: $white;
+  border-radius: $radius;
+  transition: background-color 0.3s;
+  cursor: pointer;
+
+  &--blue {
+    background-color: $blue-400;
+
+    &:hover {
+      background-color: $blue-100;
+    }
+  }
+}

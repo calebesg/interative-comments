@@ -7,13 +7,14 @@
 }
 
 body {
-  background-color: #c3c4ef;
+  background-color: #eaecf1;
 }
 
 body,
 button,
 textarea {
   font-family: "Rubik", sans-serif;
+  font-size: 1rem;
 }
 
 .sr-only {
@@ -32,6 +33,47 @@ main {
   width: 100%;
   display: flex;
   justify-content: center;
+}
+
+.btn {
+  border: none;
+  height: 3rem;
+  width: 6.5rem;
+  color: white;
+  border-radius: 8px;
+  transition: background-color 0.3s;
+  cursor: pointer;
+}
+.btn--blue {
+  background-color: #5457b6;
+}
+.btn--blue:hover {
+  background-color: #c3c4ef;
+}
+
+.c-comment {
+  width: min(45.625rem, 90%);
+}
+.c-comment__form {
+  background-color: white;
+  border-radius: 8px;
+  padding: 1rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+}
+.c-comment__form__avatar {
+  width: 2.5rem;
+  height: 2.5rem;
+}
+.c-comment__form__text {
+  flex: 1 1 auto;
+  height: 6rem;
+  padding: 0.625rem 1rem;
+  line-height: 1.5rem;
+  color: #324152;
+  border: 1px solid #324152;
+  border-radius: 8px;
 }
 
 /*# sourceMappingURL=style.css.map */

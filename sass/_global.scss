@@ -1,4 +1,4 @@
-@import "variables";
+@import 'variables';
 
 *,
 *::before,
@@ -9,13 +9,14 @@
 }
 
 body {
-  background-color: $blue-100;
+  background-color: $gray-200;
 }
 
 body,
 button,
 textarea {
-  font-family: "Rubik", sans-serif;
+  font-family: 'Rubik', sans-serif;
+  font-size: 1rem;
 }
 
 .sr-only {
