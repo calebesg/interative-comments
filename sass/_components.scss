@@ -1,6 +1,7 @@
 @import 'variables';
 
 $button: '.btn';
+$card: '.c-card';
 
 #{$button} {
   border: none;
@@ -8,7 +9,7 @@ $button: '.btn';
   width: 6.5rem;
   color: $white;
   border-radius: $radius;
-  transition: background-color 0.3s;
+  transition: all 0.3s;
   cursor: pointer;
 
   &--blue {
@@ -17,5 +18,78 @@ $button: '.btn';
     &:hover {
       background-color: $blue-100;
     }
+  }
+
+  &--tiny {
+    width: fit-content;
+    height: fit-content;
+    border: none;
+    background-color: transparent;
+  }
+
+  &--link {
+    background-color: transparent;
+    color: $blue-400;
+    font-weight: 700;
+
+    &:hover {
+      opacity: 0.6;
+    }
+  }
+}
+
+#{$card} {
+  background-color: $white;
+  border-radius: $radius;
+  padding: 1.5rem;
+  display: flex;
+  gap: 1.5rem;
+  margin-bottom: 1.25rem;
+
+  &__score {
+    background-color: $gray-100;
+    border-radius: $radius;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: fit-content;
+    padding: 0.625rem;
+    gap: 0.5rem;
+
+    &__display {
+      color: $blue-400;
+      font-weight: 500;
+    }
+  }
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &__publisher {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+
+    &__photo {
+      width: 2rem;
+      height: 2rem;
+    }
+
+    &__name {
+      color: $grayish-blue-600;
+    }
+
+    &__date {
+      color: $grayish-blue-400;
+      margin-left: 1rem;
+    }
+  }
+
+  &__comment {
+    margin-top: 0.625rem;
+    line-height: 1.5rem;
+    color: $grayish-blue-400;
   }
 }
