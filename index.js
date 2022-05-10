@@ -3,6 +3,8 @@ const parentElement = document.querySelector('.c-comment');
 const state = {
   currentUser: {},
   comments: [],
+  target: 0,
+  last: 5,
 };
 
 const generateForm = function (user, type = 'NEW') {
@@ -148,6 +150,15 @@ parentElement.addEventListener('click', e => {
   const buttonReply = e.target.closest('.btn__reply');
 
   if (!buttonReply) return;
+
+  const form = generateForm(state.currentUser, 'REPLY');
+  const commentTarget = buttonReply.closest('.c-card');
+
+  const id = commentTarget.dataset.id;
+  state.target = +id;
+  console.log(state.target);
+
+  commentTarget.insertAdjacentHTML('afterend', form);
 });
 
 // NEW COMMENT
@@ -159,27 +170,41 @@ parentElement.addEventListener('click', e => {
 
   const form = e.target.closest('.c-comment__form');
 
-  form.addEventListener('submit', e => {
+  form.addEventListener('submit', function (e) {
     e.preventDefault();
 
-    const inputComment = e.target.querySelector('.c-comment__form__text');
-    const comment = inputComment.value;
+    const inputComment = this.querySelector('.c-comment__form__text');
+    const text = inputComment.value;
 
-    if (!comment) return;
+    if (!text) return;
+
+    persistComment(text, 'REPLY');
 
     inputComment.value = '';
-
-    const newComment = {
-      content: comment,
-      createdAt: '2 mounter later',
-      id: 5,
-      replies: [],
-      score: 0,
-      user: state.currentUser,
-    };
-
-    state.comments.push(newComment);
-
     updateUI();
   });
 });
+
+const persistComment = function (message, type) {
+  state.last += 1;
+  const newComment = {
+    content: message,
+    createdAt: '2 mounter later',
+    id: state.last,
+    replies: [],
+    score: 0,
+    user: state.currentUser,
+  };
+
+  if (type === 'NEW') state.comments.push(newComment);
+  else {
+    state.comments.forEach(comment => {
+      if (comment.id === state.target) comment.replies.push(newComment);
+      else {
+        comment.replies.forEach(sub => {
+          if (sub.id === state.target) comment.replies.push(newComment);
+        });
+      }
+    });
+  }
+};
