@@ -87,6 +87,9 @@ main {
   color: #5457b6;
   font-weight: 500;
 }
+.c-card__post {
+  flex: 1 1 auto;
+}
 .c-card__header {
   display: flex;
   justify-content: space-between;

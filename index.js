@@ -1,5 +1,10 @@
 const parentElement = document.querySelector('.c-comment');
 
+const state = {
+  currentUser: {},
+  comments: [],
+};
+
 const generateForm = function (user, type = 'NEW') {
   return `
     <form action="#" class="c-comment__form">
@@ -22,7 +27,7 @@ const generateForm = function (user, type = 'NEW') {
         aria-label="Enter you comment"
       ></textarea>
 
-      <button class="btn btn--blue">${
+      <button class="btn btn--blue form__comment">${
         type === 'NEW' ? 'SEND' : 'REPLY'
       }</button>
     </form>
@@ -32,7 +37,7 @@ const generateForm = function (user, type = 'NEW') {
 const generateComment = function (comment, replies = null) {
   return `
     <li class="c-comment__item">
-      <div class="c-card">
+      <div class="c-card" data-id="${comment.id}">
         <div class="c-card__score">
           <button class="btn btn--tiny">
             <img src="./images/icon-plus.svg" alt="Plus" />
@@ -63,7 +68,7 @@ const generateComment = function (comment, replies = null) {
               </figcaption>
             </figure>
 
-            <button class="btn btn--link">
+            <button class="btn btn--link btn__reply">
               <img
                 src="./images/icon-reply.svg"
                 alt=""
@@ -112,19 +117,69 @@ const loadData = async function () {
   return data;
 };
 
-const app = async function (parentEl) {
+const updateUI = function () {
+  parentElement.innerHTML = '';
+
+  console.log(state.comments);
+
+  const commentForm = generateForm(state.currentUser);
+  parentElement.insertAdjacentHTML('beforeend', commentForm);
+
+  const commentsEl = generateCommentList(state.comments);
+  parentElement.insertAdjacentHTML('afterbegin', commentsEl);
+};
+
+const app = async function () {
   try {
     const { comments, currentUser } = await loadData();
-    console.log(comments);
+    state.currentUser = currentUser;
+    state.comments = comments;
 
-    const commentForm = generateForm(currentUser);
-    parentEl.insertAdjacentHTML('beforeend', commentForm);
-
-    const commentsEl = generateCommentList(comments);
-    parentEl.insertAdjacentHTML('afterbegin', commentsEl);
+    updateUI();
   } catch (error) {
     console.error(error);
   }
 };
+app();
 
-app(parentElement);
+// REPLY
+//////////////////////////////////////////////
+parentElement.addEventListener('click', e => {
+  const buttonReply = e.target.closest('.btn__reply');
+
+  if (!buttonReply) return;
+});
+
+// NEW COMMENT
+/////////////////////////////////////////////
+parentElement.addEventListener('click', e => {
+  const submitButton = e.target.closest('.form__comment');
+
+  if (!submitButton) return;
+
+  const form = e.target.closest('.c-comment__form');
+
+  form.addEventListener('submit', e => {
+    e.preventDefault();
+
+    const inputComment = e.target.querySelector('.c-comment__form__text');
+    const comment = inputComment.value;
+
+    if (!comment) return;
+
+    inputComment.value = '';
+
+    const newComment = {
+      content: comment,
+      createdAt: '2 mounter later',
+      id: 5,
+      replies: [],
+      score: 0,
+      user: state.currentUser,
+    };
+
+    state.comments.push(newComment);
+
+    updateUI();
+  });
+});
