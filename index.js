@@ -183,7 +183,8 @@ parentElement.addEventListener('click', e => {
 
     if (!text) return;
 
-    persistComment(text, 'REPLY');
+    persistComment(text, state.target ? 'REPLY' : 'NEW');
+    state.target = 0;
 
     inputComment.value = '';
     resetUi();
