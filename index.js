@@ -9,7 +9,9 @@ const state = {
 
 const generateForm = function (user, type = 'NEW') {
   return `
-    <form action="#" class="c-comment__form">
+    <form action="#" class="c-comment__form ${
+      type === 'REPLY' ? '--reply' : ''
+    }">
       <picture>
         <img
           class="c-comment__form__avatar"
@@ -119,7 +121,7 @@ const loadData = async function () {
   return data;
 };
 
-const updateUI = function () {
+const resetUi = function () {
   parentElement.innerHTML = '';
 
   const commentForm = generateForm(state.currentUser);
@@ -135,7 +137,7 @@ const app = async function () {
     state.currentUser = currentUser;
     state.comments = comments;
 
-    updateUI();
+    resetUi();
   } catch (error) {
     console.error(error);
   }
@@ -148,6 +150,12 @@ parentElement.addEventListener('click', e => {
   const buttonReply = e.target.closest('.btn__reply');
 
   if (!buttonReply) return;
+
+  const oldForm = document.querySelector('.--reply');
+  if (oldForm) {
+    const parent = oldForm.closest('.c-comment__item');
+    parent.removeChild(oldForm);
+  }
 
   const form = generateForm(state.currentUser, 'REPLY');
   const commentTarget = buttonReply.closest('.c-card');
@@ -178,7 +186,7 @@ parentElement.addEventListener('click', e => {
     persistComment(text, 'REPLY');
 
     inputComment.value = '';
-    updateUI();
+    resetUi();
   });
 });
 
@@ -205,3 +213,9 @@ const persistComment = function (message, type) {
     });
   }
 };
+
+window.addEventListener('keydown', e => {
+  if (e.key !== 'Escape') return;
+
+  resetUi();
+});
