@@ -122,8 +122,6 @@ const loadData = async function () {
 const updateUI = function () {
   parentElement.innerHTML = '';
 
-  console.log(state.comments);
-
   const commentForm = generateForm(state.currentUser);
   parentElement.insertAdjacentHTML('beforeend', commentForm);
 
@@ -156,7 +154,6 @@ parentElement.addEventListener('click', e => {
 
   const id = commentTarget.dataset.id;
   state.target = +id;
-  console.log(state.target);
 
   commentTarget.insertAdjacentHTML('afterend', form);
 });
