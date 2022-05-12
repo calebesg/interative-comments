@@ -1,4 +1,5 @@
 const parentElement = document.querySelector('.c-comment');
+const allComments = document.querySelectorAll('.c-comment__item');
 
 const state = {
   currentUser: {},
@@ -43,13 +44,13 @@ const generateComment = function (comment, replies = null) {
     <li class="c-comment__item">
       <div class="c-card" data-id="${comment.id}">
         <div class="c-card__score">
-          <button class="btn btn--tiny">
+          <button class="btn btn--tiny btn__upscore">
             <img src="./images/icon-plus.svg" alt="Plus" />
           </button>
 
           <span class="c-card__score__display">${comment.score}</span>
 
-          <button class="btn btn--tiny">
+          <button class="btn btn--tiny btn__dowscore">
             <img src="./images/icon-minus.svg" alt="Minus" />
           </button>
         </div>
@@ -191,6 +192,33 @@ parentElement.addEventListener('click', e => {
   });
 });
 
+// UPDATE SCORE
+/////////////////////////////////////////////
+parentElement.addEventListener('click', e => {
+  const button = e.target.closest('.btn--tiny');
+
+  if (!button) return;
+
+  const id = +button.closest('.c-card').dataset.id;
+  const upscore = button.classList.contains('btn__upscore');
+
+  state.comments.forEach(comment => {
+    if (comment.id === id)
+      upscore
+        ? (comment.score += 1)
+        : comment.score > 0 && (comment.score -= 1);
+    else {
+      comment.replies.forEach(sub => {
+        if (sub.id === id) {
+          upscore ? (sub.score += 1) : sub.score > 0 && (sub.score -= 1);
+        } else sub.score = 0;
+      });
+    }
+  });
+
+  resetUi();
+});
+
 const persistComment = function (message, type) {
   state.last += 1;
   const newComment = {
@@ -217,6 +245,6 @@ const persistComment = function (message, type) {
 
 window.addEventListener('keydown', e => {
   if (e.key !== 'Escape') return;
-
+  state.target = 0;
   resetUi();
 });
