@@ -39,56 +39,130 @@ const generateForm = function (user, type = 'NEW') {
   `;
 };
 
-const generateComment = function (comment, replies = null) {
+const defaultComment = function (comment, replies) {
   return `
-    <li class="c-comment__item">
-      <div class="c-card" data-id="${comment.id}">
-        <div class="c-card__score">
-          <button class="btn btn--tiny btn__upscore">
-            <img src="./images/icon-plus.svg" alt="Plus" />
+  <li class="c-comment__item">
+    <div class="c-card" data-id="${comment.id}">
+      <div class="c-card__score">
+        <button class="btn btn--tiny btn__upscore">
+          <img src="./images/icon-plus.svg" alt="Plus" />
+        </button>
+
+        <span class="c-card__score__display">${comment.score}</span>
+
+        <button class="btn btn--tiny btn__dowscore">
+          <img src="./images/icon-minus.svg" alt="Minus" />
+        </button>
+      </div>
+
+      <div class="c-card__post">
+        <header class="c-card__header">
+          <figure class="c-card__publisher">
+            <img
+              class="c-card__publisher__photo"
+              src="${comment.user.image.png}"
+              alt="${comment.user.username}"
+            />
+            <figcaption>
+              <strong class="c-card__publisher__name">${
+                comment.user.username
+              }</strong>
+              <span class="c-card__publisher__date">${comment.createdAt}</span>
+            </figcaption>
+          </figure>
+
+          <button class="btn btn--link btn__reply">
+            <img
+              src="./images/icon-reply.svg"
+              alt=""
+              aria-hidden="true"
+            />
+            Reply
           </button>
+        </header>
+        <p class="c-card__comment">${comment.content}</p>
+      </div>
+    </div>
 
-          <span class="c-card__score__display">${comment.score}</span>
+    ${replies ? replies : ''}
+  </li>
+`;
+};
 
-          <button class="btn btn--tiny btn__dowscore">
-            <img src="./images/icon-minus.svg" alt="Minus" />
-          </button>
-        </div>
+const personalComment = function (comment, replies) {
+  return `
+  <li class="c-comment__item">
+    <div class="c-card" data-id="${comment.id}">
+      <div class="c-card__score">
+        <button class="btn btn--tiny btn__upscore">
+          <img src="./images/icon-plus.svg" alt="Plus" />
+        </button>
 
-        <div class="c-card__post">
-          <header class="c-card__header">
-            <figure class="c-card__publisher">
+        <span class="c-card__score__display">${comment.score}</span>
+
+        <button class="btn btn--tiny btn__dowscore">
+          <img src="./images/icon-minus.svg" alt="Minus" />
+        </button>
+      </div>
+
+      <div class="c-card__post">
+        <header class="c-card__header">
+          <figure class="c-card__publisher">
+            <img
+              class="c-card__publisher__photo"
+              src="${comment.user.image.png}"
+              alt="${comment.user.username}"
+            />
+            <figcaption>
+              <strong class="c-card__publisher__name">${
+                comment.user.username
+              }</strong>
+              <span class="c-card__publisher__date">${comment.createdAt}</span>
+            </figcaption>
+          </figure>
+
+          <div class="action__buttons">
+            <button class="btn btn--link">
               <img
-                class="c-card__publisher__photo"
-                src="${comment.user.image.png}"
-                alt="${comment.user.username}"
-              />
-              <figcaption>
-                <strong class="c-card__publisher__name">${
-                  comment.user.username
-                }</strong>
-                <span class="c-card__publisher__date">${
-                  comment.createdAt
-                }</span>
-              </figcaption>
-            </figure>
-
-            <button class="btn btn--link btn__reply">
-              <img
-                src="./images/icon-reply.svg"
+                src="./images/icon-edit.svg"
                 alt=""
                 aria-hidden="true"
               />
-              Reply
+              Edit
             </button>
-          </header>
-          <p class="c-card__comment">${comment.content}</p>
-        </div>
-      </div>
+            <button class="btn btn--link btn--red">
+              <img
+                src="./images/icon-delete.svg"
+                alt=""
+                aria-hidden="true"
+              />
+              Delete
+            </button>
+          </div>
+        </header>
 
-      ${replies ? replies : ''}
-    </li>
-  `;
+        <div class="c-card__content --disabled">
+          <textarea 
+            rows="3"
+            class="c-card__input" 
+            disabled
+          >${comment.content}</textarea>
+
+          <button class="btn btn--blue form__comment">UPDATE</button>
+        </div>
+
+      </div>
+    </div>
+
+    ${replies ? replies : ''}
+  </li>
+`;
+};
+
+const generateComment = function (comment, replies = null) {
+  return comment.user.username === state.currentUser.username
+    ? personalComment(comment, replies)
+    : defaultComment(comment, replies);
 };
 
 const generateCommentList = function (comments) {
