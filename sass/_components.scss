@@ -91,6 +91,37 @@ $card: '.c-card';
     }
   }
 
+  &__content {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+  }
+
+  &__content.--disabled {
+    #{$card}__input {
+      background-color: transparent;
+      border: none;
+      padding: 0;
+    }
+
+    .btn {
+      display: none;
+    }
+  }
+
+  &__input {
+    width: 100%;
+    overflow: auto;
+    resize: none;
+    margin-top: 0.625rem;
+    margin-bottom: 1rem;
+    border-radius: $radius;
+    padding: 0.8rem;
+    line-height: 1.5rem;
+    color: $grayish-blue-400;
+  }
+
   &__comment {
     margin-top: 0.625rem;
     line-height: 1.5rem;
