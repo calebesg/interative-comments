@@ -2,6 +2,7 @@
 
 $button: '.btn';
 $card: '.c-card';
+$modal: '.c-modal';
 
 #{$button} {
   border: none;
@@ -20,6 +21,22 @@ $card: '.c-card';
     }
   }
 
+  &--gray {
+    background-color: $grayish-blue-600;
+
+    &:hover {
+      background-color: $grayish-blue-400;
+    }
+  }
+
+  &--red {
+    background-color: $red-400;
+
+    &:hover {
+      background-color: $red-100;
+    }
+  }
+
   &--tiny {
     width: fit-content;
     height: fit-content;
@@ -35,6 +52,10 @@ $card: '.c-card';
     &:hover {
       opacity: 0.6;
     }
+  }
+
+  &__card--delete {
+    color: $red-400;
   }
 }
 
@@ -126,5 +147,58 @@ $card: '.c-card';
     margin-top: 0.625rem;
     line-height: 1.5rem;
     color: $grayish-blue-400;
+  }
+}
+
+#{$modal} {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: show 0.3s linear;
+
+  &__card {
+    background-color: $white;
+    border-radius: $radius;
+    padding: 2rem;
+    width: min(25rem, 90%);
+  }
+
+  &__title {
+    color: $grayish-blue-600;
+    font-size: 1.25rem;
+  }
+
+  &__description {
+    margin-top: 1rem;
+    line-height: 1.5rem;
+    color: $grayish-blue-400;
+  }
+
+  &__footer {
+    margin-top: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+
+    button {
+      flex: 1 1 auto;
+    }
+  }
+}
+
+#{$modal}--hidden {
+  display: none;
+  opacity: 0;
+}
+
+@keyframes show {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
   }
 }

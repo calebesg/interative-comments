@@ -1,5 +1,8 @@
 const parentElement = document.querySelector('.c-comment');
 const allComments = document.querySelectorAll('.c-comment__item');
+const modal = document.querySelector('.c-modal');
+const btnCancel = document.querySelector('.btn__cancel');
+const btnDelete = document.querySelector('.btn__delete');
 
 const state = {
   currentUser: {},
@@ -122,7 +125,7 @@ const personalComment = function (comment, replies) {
           </figure>
 
           <div class="action__buttons">
-            <button class="btn btn--link btn__update">
+            <button class="btn btn--link btn__card--update">
               <img
                 src="./images/icon-edit.svg"
                 alt=""
@@ -130,7 +133,7 @@ const personalComment = function (comment, replies) {
               />
               Edit
             </button>
-            <button class="btn btn--link btn--red btn__delete">
+            <button class="btn btn--link btn__card--delete">
               <img
                 src="./images/icon-delete.svg"
                 alt=""
@@ -245,25 +248,30 @@ const updateComment = function (el) {
 
     const id = +e.target.closest('.c-card').dataset.id;
 
-    console.log(id);
-
     state.comments.forEach(comment => {
       if (comment.id === id) comment.content = inputComment.value;
-      else {
-        comment.replies.forEach(sub => {
-          if (sub.id === id) comment.content = inputComment.value;
-        });
-      }
+
+      comment.replies.forEach(sub => {
+        if (sub.id === id) sub.content = inputComment.value;
+      });
     });
 
     inputComment.setAttribute('disabled', true);
 
     toggleVisibilityForm(inputComment);
+    resetUi();
   });
 };
 
-const deleteComment = function () {
-  console.log('delete');
+const toggleVisibilityModal = function () {
+  modal.classList.toggle('c-modal--hidden');
+};
+
+const deleteComment = function (el) {
+  const id = +el.closest('.c-card').dataset.id;
+  state.target = id;
+
+  toggleVisibilityModal();
 };
 
 // REPLY
@@ -320,8 +328,8 @@ parentElement.addEventListener('click', e => {
 
   if (!button) return;
 
-  if (button.classList.contains('btn__delete')) deleteComment();
-  if (button.classList.contains('btn__update')) updateComment(button);
+  if (button.classList.contains('btn__card--delete')) deleteComment(button);
+  if (button.classList.contains('btn__card--update')) updateComment(button);
 });
 
 // UPDATE SCORE
@@ -374,6 +382,25 @@ const persistComment = function (message, type) {
     });
   }
 };
+
+btnCancel.addEventListener('click', toggleVisibilityModal);
+
+btnDelete.addEventListener('click', () => {
+  const newComments = state.comments.filter(
+    comment => comment.id !== state.target
+  );
+
+  newComments.forEach(comment =>
+    comment.replies.forEach((reply, index) => {
+      if (reply.id === state.target) comment.replies.splice(index, 1);
+    })
+  );
+
+  state.comments = newComments;
+  state.target = 0;
+  toggleVisibilityModal();
+  resetUi();
+});
 
 window.addEventListener('keydown', e => {
   if (e.key !== 'Escape') return;
