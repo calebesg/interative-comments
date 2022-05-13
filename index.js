@@ -122,7 +122,7 @@ const personalComment = function (comment, replies) {
           </figure>
 
           <div class="action__buttons">
-            <button class="btn btn--link">
+            <button class="btn btn--link btn__update">
               <img
                 src="./images/icon-edit.svg"
                 alt=""
@@ -130,7 +130,7 @@ const personalComment = function (comment, replies) {
               />
               Edit
             </button>
-            <button class="btn btn--link btn--red">
+            <button class="btn btn--link btn--red btn__delete">
               <img
                 src="./images/icon-delete.svg"
                 alt=""
@@ -148,7 +148,7 @@ const personalComment = function (comment, replies) {
             disabled
           >${comment.content}</textarea>
 
-          <button class="btn btn--blue form__comment">UPDATE</button>
+          <button class="btn btn--blue form__comment--update">UPDATE</button>
         </div>
 
       </div>
@@ -219,6 +219,53 @@ const app = async function () {
 };
 app();
 
+const toggleVisibilityForm = function (el) {
+  el.closest('.c-card')
+    .querySelector('.c-card__content')
+    .classList.toggle('--disabled');
+};
+
+const updateComment = function (el) {
+  toggleVisibilityForm(el);
+
+  const updateButton = el
+    .closest('.c-card')
+    .querySelector('.form__comment--update');
+
+  el.closest('.c-card')
+    .querySelector('.c-card__input')
+    .removeAttribute('disabled');
+
+  updateButton.addEventListener('click', e => {
+    const inputComment = e.target
+      .closest('.c-card__content')
+      .querySelector('.c-card__input');
+
+    if (!inputComment) return;
+
+    const id = +e.target.closest('.c-card').dataset.id;
+
+    console.log(id);
+
+    state.comments.forEach(comment => {
+      if (comment.id === id) comment.content = inputComment.value;
+      else {
+        comment.replies.forEach(sub => {
+          if (sub.id === id) comment.content = inputComment.value;
+        });
+      }
+    });
+
+    inputComment.setAttribute('disabled', true);
+
+    toggleVisibilityForm(inputComment);
+  });
+};
+
+const deleteComment = function () {
+  console.log('delete');
+};
+
 // REPLY
 //////////////////////////////////////////////
 parentElement.addEventListener('click', e => {
@@ -264,6 +311,17 @@ parentElement.addEventListener('click', e => {
     inputComment.value = '';
     resetUi();
   });
+});
+
+// UPDATE COMMENT
+/////////////////////////////////////////////
+parentElement.addEventListener('click', e => {
+  const button = e.target.closest('.btn--link');
+
+  if (!button) return;
+
+  if (button.classList.contains('btn__delete')) deleteComment();
+  if (button.classList.contains('btn__update')) updateComment(button);
 });
 
 // UPDATE SCORE
