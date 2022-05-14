@@ -11,6 +11,19 @@ const state = {
   last: 5,
 };
 
+const formatMovementDate = function (date, locale) {
+  const calcDaysPassed = (date1, date2) =>
+    Math.round(Math.abs((date1 - date2) / (1000 * 60 * 60 * 24)));
+
+  const daysPassed = calcDaysPassed(new Date(), date);
+
+  if (daysPassed === 0) return 'Today';
+  if (daysPassed === 1) return 'Yesterday';
+  if (daysPassed <= 7) return `${daysPassed} days ago`;
+
+  return new Intl.DateTimeFormat(locale).format(date);
+};
+
 const generateForm = function (user, type = 'NEW') {
   return `
     <form action="#" class="c-comment__form ${
@@ -365,7 +378,7 @@ const persistComment = function (message, type) {
   state.last += 1;
   const newComment = {
     content: message,
-    createdAt: '2 mounter later',
+    createdAt: formatMovementDate(new Date(), navigator.locale),
     id: state.last,
     replies: [],
     score: 0,
