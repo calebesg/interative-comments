@@ -1,5 +1,6 @@
 @use 'global';
 @use 'components';
+@use 'mixins';
 @import 'variables';
 
 $component: '.c-comment';
@@ -11,6 +12,11 @@ $component: '.c-comment';
     border-left: 1px solid $blue-100;
     padding-left: 2rem;
     margin-left: 2rem;
+
+    @include mixins.mobile {
+      padding-left: 1rem;
+      margin-left: 0;
+    }
   }
 
   &__form {

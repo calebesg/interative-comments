@@ -1,3 +1,4 @@
+@use 'mixins';
 @import 'variables';
 
 $button: '.btn';
@@ -12,6 +13,11 @@ $modal: '.c-modal';
   border-radius: $radius;
   transition: all 0.3s;
   cursor: pointer;
+
+  @include mixins.mobile {
+    width: 4.5rem;
+    height: 2rem;
+  }
 
   &--blue {
     background-color: $blue-400;
@@ -60,12 +66,17 @@ $modal: '.c-modal';
 }
 
 #{$card} {
+  position: relative;
   background-color: $white;
   border-radius: $radius;
   padding: 1.5rem;
   display: flex;
   gap: 1.5rem;
   margin-bottom: 1.25rem;
+
+  @include mixins.mobile {
+    flex-direction: column-reverse;
+  }
 
   &__score {
     background-color: $gray-100;
@@ -76,6 +87,12 @@ $modal: '.c-modal';
     height: fit-content;
     padding: 0.625rem;
     gap: 0.5rem;
+
+    @include mixins.mobile {
+      flex-direction: row;
+      width: fit-content;
+      gap: 1.5rem;
+    }
 
     &__display {
       color: $blue-400;
@@ -90,6 +107,14 @@ $modal: '.c-modal';
   &__header {
     display: flex;
     justify-content: space-between;
+
+    @include mixins.mobile {
+      .action__buttons {
+        position: absolute;
+        bottom: 1.5rem;
+        right: 1.5rem;
+      }
+    }
   }
 
   &__publisher {

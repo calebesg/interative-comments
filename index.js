@@ -73,15 +73,17 @@ const defaultComment = function (comment, replies) {
               <span class="c-card__publisher__date">${comment.createdAt}</span>
             </figcaption>
           </figure>
-
-          <button class="btn btn--link btn__reply">
-            <img
-              src="./images/icon-reply.svg"
-              alt=""
-              aria-hidden="true"
-            />
-            Reply
-          </button>
+          
+          <div class="action__buttons">
+            <button class="btn btn--link btn__reply">
+              <img
+                src="./images/icon-reply.svg"
+                alt=""
+                aria-hidden="true"
+              />
+              Reply
+            </button>
+          </div>
         </header>
         <p class="c-card__comment">${comment.content}</p>
       </div>
