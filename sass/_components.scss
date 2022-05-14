@@ -14,11 +14,6 @@ $modal: '.c-modal';
   transition: all 0.3s;
   cursor: pointer;
 
-  @include mixins.mobile {
-    width: 4.5rem;
-    height: 2rem;
-  }
-
   &--blue {
     background-color: $blue-400;
 
@@ -54,6 +49,11 @@ $modal: '.c-modal';
     background-color: transparent;
     color: $blue-400;
     font-weight: 700;
+
+    @include mixins.mobile {
+      width: 4.5rem;
+      height: 2rem;
+    }
 
     &:hover {
       opacity: 0.6;
@@ -166,6 +166,10 @@ $modal: '.c-modal';
     padding: 0.8rem;
     line-height: 1.5rem;
     color: $grayish-blue-400;
+
+    @include mixins.mobile {
+      height: 6rem;
+    }
   }
 
   &__comment {
