@@ -33,7 +33,6 @@ const generateForm = function (user, type = 'NEW') {
         <img
           class="c-comment__form__avatar"
           src="${user.image.png}"
-          loading="lazy"
           alt="${user.username}"
         />
       </picture>
@@ -48,7 +47,7 @@ const generateForm = function (user, type = 'NEW') {
         aria-label="Enter you comment"
       ></textarea>
 
-      <button class="btn btn--blue form__comment">${
+      <button type="submit" class="btn btn--blue form__comment">${
         type === 'NEW' ? 'SEND' : 'REPLY'
       }</button>
     </form>
@@ -60,13 +59,13 @@ const defaultComment = function (comment, replies) {
   <li class="c-comment__item">
     <div class="c-card" data-id="${comment.id}">
       <div class="c-card__score">
-        <button class="btn btn--tiny btn__upscore">
+        <button type="button" class="btn btn--tiny btn__upscore" aria-label="add">
           <img src="./images/icon-plus.svg" alt="Plus" />
         </button>
 
         <span class="c-card__score__display">${comment.score}</span>
 
-        <button class="btn btn--tiny btn__dowscore">
+        <button type="button" class="btn btn--tiny btn__dowscore" aria-label="degree">
           <img src="./images/icon-minus.svg" alt="Minus" />
         </button>
       </div>
@@ -88,7 +87,7 @@ const defaultComment = function (comment, replies) {
           </figure>
           
           <div class="action__buttons">
-            <button class="btn btn--link btn__reply">
+            <button type="button" class="btn btn--link btn__reply">
               <img
                 src="./images/icon-reply.svg"
                 alt=""
@@ -112,13 +111,13 @@ const personalComment = function (comment, replies) {
   <li class="c-comment__item">
     <div class="c-card" data-id="${comment.id}">
       <div class="c-card__score">
-        <button class="btn btn--tiny btn__upscore">
+        <button type="button" class="btn btn--tiny btn__upscore" aria-label="up score">
           <img src="./images/icon-plus.svg" alt="Plus" />
         </button>
 
         <span class="c-card__score__display">${comment.score}</span>
 
-        <button class="btn btn--tiny btn__dowscore">
+        <button type="button" class="btn btn--tiny btn__dowscore aria-label="down score"">
           <img src="./images/icon-minus.svg" alt="Minus" />
         </button>
       </div>
@@ -140,7 +139,7 @@ const personalComment = function (comment, replies) {
           </figure>
 
           <div class="action__buttons">
-            <button class="btn btn--link btn__card--update">
+            <button type="button" class="btn btn--link btn__card--update">
               <img
                 src="./images/icon-edit.svg"
                 alt=""
@@ -148,7 +147,7 @@ const personalComment = function (comment, replies) {
               />
               Edit
             </button>
-            <button class="btn btn--link btn__card--delete">
+            <button type="button" class="btn btn--link btn__card--delete">
               <img
                 src="./images/icon-delete.svg"
                 alt=""
@@ -164,9 +163,10 @@ const personalComment = function (comment, replies) {
             rows="3"
             class="c-card__input" 
             disabled
+            aria-label="you comment"
           >${comment.content}</textarea>
 
-          <button class="btn btn--blue form__comment--update">UPDATE</button>
+          <button type="button" class="btn btn--blue form__comment--update">UPDATE</button>
         </div>
 
       </div>
