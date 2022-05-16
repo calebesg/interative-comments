@@ -9,7 +9,7 @@ $component: '.c-comment';
   width: min(45.625rem, 90%);
 
   &__reply {
-    border-left: 1px solid $blue-100;
+    border-left: 1px solid $gray-200;
     padding-left: 2rem;
     margin-left: 2rem;
 
@@ -56,7 +56,7 @@ $component: '.c-comment';
       padding: 0.625rem 1rem;
       line-height: 1.5rem;
       color: $grayish-blue-600;
-      border: 1px solid $grayish-blue-600;
+      border: 1px solid $gray-200;
       border-radius: $radius;
 
       @include mixins.mobile {

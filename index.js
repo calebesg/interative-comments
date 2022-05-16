@@ -139,14 +139,6 @@ const personalComment = function (comment, replies) {
           </figure>
 
           <div class="action__buttons">
-            <button type="button" class="btn btn--link btn__card--update">
-              <img
-                src="./images/icon-edit.svg"
-                alt=""
-                aria-hidden="true"
-              />
-              Edit
-            </button>
             <button type="button" class="btn btn--link btn__card--delete">
               <img
                 src="./images/icon-delete.svg"
@@ -154,6 +146,14 @@ const personalComment = function (comment, replies) {
                 aria-hidden="true"
               />
               Delete
+            </button>
+            <button type="button" class="btn btn--link btn__card--update">
+              <img
+                src="./images/icon-edit.svg"
+                alt=""
+                aria-hidden="true"
+              />
+              Edit
             </button>
           </div>
         </header>
