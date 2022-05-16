@@ -117,7 +117,7 @@ const personalComment = function (comment, replies) {
 
         <span class="c-card__score__display">${comment.score}</span>
 
-        <button type="button" class="btn btn--tiny btn__dowscore aria-label="down score"">
+        <button type="button" class="btn btn--tiny btn__dowscore" aria-label="down score">
           <img src="./images/icon-minus.svg" alt="Minus" />
         </button>
       </div>
